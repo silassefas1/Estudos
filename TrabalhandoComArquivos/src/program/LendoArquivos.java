@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Application {
+public class LendoArquivos {
 	
 	public static void main(String[] args) {
-		
+		/*Sr for usar o techo de codigo mudar a caminho do arquivo*/
 		File file = new File("c:\\temp\\in.txt"); // instancia um objeto do tipo File que irar acessar o objeto e da funções a ele
 		
 		Scanner sc = null;
