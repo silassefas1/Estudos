@@ -20,7 +20,10 @@ public class PaypalTax implements TaxaDeServico {
 	
 	public double gerarTaxa(double valorParcela, int parcelaReferencia) {
 		
-		return (valorParcela*(1+0.01*parcelaReferencia))*(1+0.2);
+		double parcelaComJuros = valorParcela+((valorParcela)*(0.01*parcelaReferencia));
+		double taxas = parcelaComJuros +(parcelaComJuros*0.02); // 2% da taxa de pagamento
+		
+		return taxas ;
 	}
 	
 
