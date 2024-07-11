@@ -2,9 +2,9 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import entities.Product;
-import util.ProductPredicate;
 
 public class Program {
 	
@@ -28,7 +28,12 @@ public class Program {
 		//list.removeIf(new ProductPredicate());
 		
 		/*Usando um metodo como referencia no lugar do predicato*/
-		list.removeIf(Product::staticProductPredicate);
+		//list.removeIf(Product::staticProductPredicate);
+		
+		/*Expressao lambda declarada*/
+		
+		Predicate<Product> predicate = p -> p.getPrice() >= 100.00;
+		list.removeIf(predicate);
 		
 		for(Product p: list) {
 			System.out.println(p);
