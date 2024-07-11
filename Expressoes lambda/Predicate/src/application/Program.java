@@ -19,14 +19,16 @@ public class Program {
 		
 		/*Primeira forma de remover todos os elementos da lista com preço maior que $100
 		 * - Predicate: p -> p.getPrice() >= 100 */
-		
 		//list.removeIf(p -> p.getPrice() >= 100);
+		
 		
 		/*Segunda forma de remover os elementos com preço maior que 100
 		 * Criar uma classe que implementa o predicate de product e retorna os produtos com 
 		 * valor maior que 100*/
+		//list.removeIf(new ProductPredicate());
 		
-		list.removeIf(new ProductPredicate());
+		/*Usando um metodo como referencia no lugar do predicato*/
+		list.removeIf(Product::staticProductPredicate);
 		
 		for(Product p: list) {
 			System.out.println(p);
