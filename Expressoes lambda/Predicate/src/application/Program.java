@@ -31,9 +31,8 @@ public class Program {
 		//list.removeIf(Product::staticProductPredicate);
 		
 		/*Expressao lambda declarada*/
-		
-		Predicate<Product> predicate = p -> p.getPrice() >= 100.00;
-		list.removeIf(predicate);
+		//Predicate<Product> predicate = p -> p.getPrice() >= 100.00;
+		//list.removeIf(predicate);
 		
 		for(Product p: list) {
 			System.out.println(p);
