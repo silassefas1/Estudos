@@ -17,7 +17,7 @@ public class Program {
 		Scanner scan = new Scanner(System.in);
 		System.out.print("Enter Full file path: ");
 		String path = scan.nextLine();
-		//"C:\\Users\\Rh\\Desktop\\Projetos\\Estudos\\Expressoes lambda\\ExercicioResolvido";
+		//"C:\\Users\\Rh\\Desktop\\Projetos\\Estudos\\Expressoes lambda\\ExercicioResolvido\\in.txt";
 		
 		try(BufferedReader reader = new BufferedReader( new FileReader(path))){
 			
@@ -29,7 +29,11 @@ public class Program {
 				line = reader.readLine();
 			}
 			
+			double average = list.stream() //criando a stream da lista
+					.map(p -> p.getPrice()) // criando um map da lista so com o preço dos produtos
+					.reduce(0.0, (x,y) -> x+y) /list.size(); //usando a função reduce com um par para somar os elemntos da lista
 			
+			System.out.println("Average price: " + String.format("%.2f", average));
 			
 			
 		}
