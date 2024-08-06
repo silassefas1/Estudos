@@ -2,7 +2,9 @@ package application;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -24,7 +26,8 @@ public class Program {
 					"INSERT INTO seller "
 					+"(Name, Email, BirthDate, BaseSalary, DepartmentId)"
 					+"VALUES "
-					+"(?, ?, ?, ?, ?)"); // O Sinal de ?, é um placeholder que indica um dado a ser preenchido posteriormente.
+					+"(?, ?, ?, ?, ?)", // O Sinal de ?, é um placeholder que indica um dado a ser preenchido posteriormente.
+					Statement.RETURN_GENERATED_KEYS); 
 			
 			preparedStatement.setString(1, "Carl Purple");
 			preparedStatement.setString(2, "Carl@gmail.com");
@@ -34,7 +37,15 @@ public class Program {
 			
 			int rowsAffected = preparedStatement.executeUpdate();
 			
-			System.out.println("Done! Rows affected: " + rowsAffected);
+			if(rowsAffected >0) {
+				ResultSet resulteSet = preparedStatement.getGeneratedKeys();
+				while(resulteSet.next()) {
+					int id = resulteSet.getInt(1); //coluna 1
+					System.out.println("Done! id= "+ id);
+				}
+			}else {
+				System.out.println("No rown affected!");
+			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
