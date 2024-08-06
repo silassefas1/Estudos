@@ -9,49 +9,31 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import db.DB;
+import db.DbIntegrityException;
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		/*Connectar a um banco de dados e inserir dados nele*/
+		/*Connectar a um banco de dados e atualizando dados dele*/
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-		
 		try {
 			connection = DB.getConnection();
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO seller "
-					+"(Name, Email, BirthDate, BaseSalary, DepartmentId)"
-					+"VALUES "
-					+"(?, ?, ?, ?, ?)", // O Sinal de ?, é um placeholder que indica um dado a ser preenchido posteriormente.
-					Statement.RETURN_GENERATED_KEYS); 
+					"DELETE FROM department "
+					+ "WHERE "
+					+ "(Id = ?)");
 			
-			preparedStatement.setString(1, "Carl Purple");
-			preparedStatement.setString(2, "Carl@gmail.com");
-			preparedStatement.setDate(3, new java.sql.Date(date.parse("22/04/1985").getTime()));
-			preparedStatement.setDouble(4, 3250.00);
-			preparedStatement.setInt(5, 4);
-			
+			preparedStatement.setInt(1, 2); // não pode deletar um chave extrageira com valores associados
+
 			int rowsAffected = preparedStatement.executeUpdate();
 			
-			if(rowsAffected >0) {
-				ResultSet resulteSet = preparedStatement.getGeneratedKeys();
-				while(resulteSet.next()) {
-					int id = resulteSet.getInt(1); //coluna 1
-					System.out.println("Done! id= "+ id);
-				}
-			}else {
-				System.out.println("No rown affected!");
-			}
+			System.out.println("Done! Rows affected: " + rowsAffected);
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		catch(ParseException e) {
-			e.printStackTrace();
+			throw new DbIntegrityException(e.getMessage()); // captura a exceção do jdbc e lança uma personalizada
 		}
 		finally {
 			DB.closeStatement(preparedStatement);
